@@ -8,15 +8,22 @@ GREEN = "#6B9362"
 YELLOW = "#f7f5dd"
 TIMER_COLOR = "#889375"
 FONT_NAME = "Courier"
-WORK_MIN = 0.2
+WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
+
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
     window.after_cancel(timer)
+    timer_label.config(text="Timer", fg=TIMER_COLOR)
+    canvas.itemconfig(timer_text, text="00:00")
+    checkmark.config(text="")
+    global reps
+    reps = 0
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -28,6 +35,7 @@ def start_timer():
     long_break_sec = LONG_BREAK_MIN * 60
     if reps % 2 != 0:
         countdown(work_sec)
+        timer_label.config(text="Work", fg=GREEN)
     elif reps % 8 == 0:
         countdown(long_break_sec)
         timer_label.config(text="Break", fg=RED)
